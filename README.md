@@ -8,8 +8,6 @@ The code is based on the mmdetection.
 mmdetection is an open source object detection toolbox based on PyTorch. It is
 a part of the open-mmlab project developed by [Multimedia Laboratory, CUHK](http://mmlab.ie.cuhk.edu.hk/).
 
-![demo image](demo/coco_test_12510.jpg)
-
 Currently, it contains these features:
 - **Multiple Base Network**: Mobilenet V2, ShuffleNet V2
 - **One-Stage Lightweight Detector**: SSD, RetinaNet
@@ -21,7 +19,7 @@ Currently, it contains these features:
 
 | VOC2007      | SSD                                                                         | RetinaNet                                                                   
 |--------------|-----------------------------------------------------------------------------|-----------------------------------------------------------------------------|
-| MobilenetV2  |                                                                             | 81.9                                                                        |
+| MobilenetV2  |                                                                             | 81.9%                                                                        |
 | ShufflenetV2 |                                                                             |                                                                             |
 
 
