@@ -23,7 +23,6 @@ Currently, it contains these features:
 
 
 
-
 ## Performance
 
 | VOC2007      | SSD                                                                         | RetinaNet                                                                   
