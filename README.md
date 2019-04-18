@@ -12,8 +12,6 @@ a part of the open-mmlab project developed by [Multimedia Laboratory, CUHK](http
 ![demo image](demo/V3.png)
 ![demo image](demo/V4.png)
 ![demo image](demo/1.png)
-![demo image](demo/2.png)
-![demo image](demo/3.png)
 ![demo image](demo/4.png)
 
 Currently, it contains these features:
