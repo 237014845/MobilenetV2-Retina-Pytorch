@@ -16,7 +16,7 @@ a part of the open-mmlab project developed by [Multimedia Laboratory, CUHK](http
 
 Currently, it contains these features:
 - **Multiple Base Network**: Mobilenet V2, ShuffleNet V2
-- **One-Stage Lightweight Detector**: SSD, RetinaNet
+- **One-Stage Lightweight Detector**: MobileV2-SSD, MobileV2-RetinaNet
 
 
 ## Performance
