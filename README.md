@@ -1,5 +1,5 @@
 
-# mmdetection
+# MobileV2 RetinaNet
 
 ## Introduction
 
