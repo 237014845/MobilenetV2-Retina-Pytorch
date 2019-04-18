@@ -1,5 +1,5 @@
 
-# MobileV2 RetinaNet
+# Lightweight Object Detection
 
 ## Introduction
 
