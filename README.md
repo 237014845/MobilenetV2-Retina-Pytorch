@@ -22,7 +22,6 @@ Currently, it contains these features:
 - **One-Stage Lightweight Detector**: SSD, RetinaNet
 
 
-
 ## Performance
 
 | VOC2007      | SSD                                                                         | RetinaNet                                                                   
