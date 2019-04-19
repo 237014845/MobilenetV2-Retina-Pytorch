@@ -139,8 +139,8 @@ class FPN(nn.Module):
         # for i in range(2, 0, -1)
         # i = 2, 1
         for i in range(used_backbone_levels - 1, 0, -1):
-            # P4 = C4 + up_sample(p5) (19*19)
-            # P3 = C3 + up_sample(p4) (38*38)
+            # P4 = C4 + up_sample(p5) (25*25) (19*19)
+            # P3 = C3 + up_sample(p4) (50*50) (38*38)
             laterals[i - 1] += F.interpolate(
                 laterals[i], scale_factor=2, mode='nearest')
 

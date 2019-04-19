@@ -111,11 +111,11 @@ class InvertedResidual(nn.Module):
 
 @BACKBONES.register_module
 class ShuffleNetV2(nn.Module):
-    # out_indices=(1, 5, 14, 17)
-    def __init__(self, out_indices=(1, 2, 5, 6, 13, 14, 17),  width_mult=1.):
+    # out_indices=(1, 5, 13, 17)
+    def __init__(self, out_indices=(1, 5, 13, 17),  width_mult=1.):
         super(ShuffleNetV2, self).__init__()
 
-
+        self.out_indices = out_indices
         self.stage_repeats = [4, 8, 4]
         # index 0 is invalid and should never be called.
         # only used for indexing convenience.
@@ -137,10 +137,14 @@ class ShuffleNetV2(nn.Module):
         self.conv1 = conv_bn(3, input_channel, 2)
         self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
 
-        self.features = [self.conv1, self.maxpool]
+        self.features = []
         # building inverted residual blocks
+        # for i in range(3)
         for idxstage in range(len(self.stage_repeats)):
+            # numrepeat = 4 、8 、4
             numrepeat = self.stage_repeats[idxstage]
+            # output_channel(0.5) = [48, 96, 192, 1024]
+            # output_channel(1.0) = [116, 232, 464, 1024]
             output_channel = self.stage_out_channels[idxstage + 2]
             for i in range(numrepeat):
                 if i == 0:
@@ -172,7 +176,11 @@ class ShuffleNetV2(nn.Module):
                     constant_init(m, 1)
 
     def forward(self, x):
-        outs = []
+        
+        x = self.conv1(x)
+        x = self.maxpool(x)
+        s = x
+        outs = [s]
         for i in range(len(self.features)):
             x = self.features[i](x)
             if i in self.out_indices:
@@ -206,5 +214,5 @@ class ShuffleNetV2(nn.Module):
 # from torchsummary import summary
 # device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 # model = ShuffleNetV2().to(device)
-# a = summary(model, (3, 224, 224))
+# a = summary(model, (3, 320, 320))
 # print(a)

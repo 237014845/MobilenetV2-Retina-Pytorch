@@ -1,15 +1,15 @@
 # model settings
 model = dict(
     type='RetinaNet',
-    pretrained='/home/hs/hs/237014845/HuaWei/mmdetection-master/weights/mobileV2_retina_coco/mobilev2/mobilenet_v2.pth',
+    pretrained='/home/hs/hs/237014845/HuaWei/mmdetection-master/weights/ShuffleNetV2/shufflenetv2_x0.5_60.646_81.696.pth.tar',
     backbone=dict(
-        type='MobileNetV2',
-        out_indices=(3, 6, 13, 17),
-        width_mult=1.,
+        type='ShuffleNetV2',
+        out_indices=(3, 11, 15),
+        width_mult=0.5,
         ),
     neck=dict(
         type='FPN',
-        in_channels=[56, 32, 96, 320],
+        in_channels=[24, 48, 96, 192],
         out_channels=256,
         start_level=1,
         add_extra_convs=True,
@@ -52,8 +52,8 @@ data_root = '/home/hs/data/VOCdevkit/'
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
 data = dict(
-    imgs_per_gpu=10,
-    workers_per_gpu=6,
+    imgs_per_gpu=32,
+    workers_per_gpu=2,
     train=dict(
         type='RepeatDataset',
         times=10,
@@ -65,7 +65,7 @@ data = dict(
             ],
             img_prefix=[data_root + 'VOC2007/', data_root + 'VOC2012/'],
             # img_prefix=[data_root + 'VOC2007/',],
-            img_scale=(800, 800),
+            img_scale=(320, 320),
             img_norm_cfg=img_norm_cfg,
             size_divisor=None,
             flip_ratio=0.5,
@@ -90,7 +90,7 @@ data = dict(
         type=dataset_type,
         ann_file=data_root + 'VOC2007/ImageSets/Main/test.txt',
         img_prefix=data_root + 'VOC2007/',
-        img_scale=(800, 800),
+        img_scale=(320, 320),
         img_norm_cfg=img_norm_cfg,
         size_divisor=None,
         flip_ratio=0,
@@ -102,7 +102,7 @@ data = dict(
         type=dataset_type,
         ann_file=data_root + 'VOC2007/ImageSets/Main/test.txt',
         img_prefix=data_root + 'VOC2007/',
-        img_scale=(800, 800),
+        img_scale=(320, 320),
         img_norm_cfg=img_norm_cfg,
         size_divisor=None,
         flip_ratio=0,
@@ -131,7 +131,7 @@ log_config = dict(
     ])
 # yapf:enable
 # runtime settings
-total_epochs = 25
+total_epochs = 24
 device_ids = range(8)
 dist_params = dict(backend='nccl')
 log_level = 'INFO'
