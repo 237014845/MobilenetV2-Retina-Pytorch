@@ -8,8 +8,8 @@ from mmcv.cnn import constant_init, kaiming_init
 from mmcv.runner import load_checkpoint
 
 from mmdet.ops import DeformConv, ModulatedDeformConv
-# from ..registry import BACKBONES
-# from ..utils import build_norm_layer
+from ..registry import BACKBONES
+from ..utils import build_norm_layer
 
 
 def conv_bn(inp, oup, stride):
@@ -109,7 +109,7 @@ class InvertedResidual(nn.Module):
 
         return channel_shuffle(out, 2)
 
-# @BACKBONES.register_module
+@BACKBONES.register_module
 class ShuffleNetV2(nn.Module):
     # out_indices=(1, 5, 14, 17)
     def __init__(self, out_indices=(1, 2, 5, 6, 13, 14, 17),  width_mult=1.):
@@ -203,8 +203,8 @@ class ShuffleNetV2(nn.Module):
 #     model = ShuffleNetV2()
 #     print(model)
 
-from torchsummary import summary
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-model = ShuffleNetV2().to(device)
-a = summary(model, (3, 224, 224))
-print(a)
+# from torchsummary import summary
+# device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+# model = ShuffleNetV2().to(device)
+# a = summary(model, (3, 224, 224))
+# print(a)
