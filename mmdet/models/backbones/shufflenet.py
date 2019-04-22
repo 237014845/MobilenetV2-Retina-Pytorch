@@ -214,5 +214,5 @@ class ShuffleNetV2(nn.Module):
 # from torchsummary import summary
 # device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 # model = ShuffleNetV2().to(device)
-# a = summary(model, (3, 320, 320))
+# a = summary(model, (3, 480, 480))
 # print(a)
