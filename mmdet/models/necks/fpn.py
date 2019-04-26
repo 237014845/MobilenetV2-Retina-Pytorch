@@ -34,6 +34,7 @@ class FPN(nn.Module):
         self.with_bias = normalize is None
 
         if end_level == -1:
+            # self.backbone_end_level=4
             self.backbone_end_level = self.num_ins
             assert num_outs >= self.num_ins - start_level
         else:
@@ -41,7 +42,9 @@ class FPN(nn.Module):
             self.backbone_end_level = end_level
             assert end_level <= len(in_channels)
             assert num_outs == end_level - start_level
+        # start_level=1
         self.start_level = start_level
+        # self.end_level = -1
         self.end_level = end_level
         self.add_extra_convs = add_extra_convs
 
@@ -62,7 +65,9 @@ class FPN(nn.Module):
                 out_channels,
                 1,
                 normalize=normalize,
+                # bias = True
                 bias=self.with_bias,
+                # activation = None
                 activation=self.activation,
                 inplace=False)
             # conv(256, 256, 3)
@@ -147,6 +152,9 @@ class FPN(nn.Module):
         # build outputs
         # part 1: from original levels
         outs = [
+            # conv(256, 256, 3)(P3)
+            # conv(256, 256, 3)(P4)
+            # conv(256, 256, 3)(P5)
             self.fpn_convs[i](laterals[i]) for i in range(used_backbone_levels)
         ]
         # part 2: add extra levels
@@ -160,10 +168,12 @@ class FPN(nn.Module):
             else:
                 orig = inputs[self.backbone_end_level - 1]
                 # P6
+                # self.fpn_convs[3](inputs[3]) => conv(2048, 256, k=3, s=2, p=1)(2048)
                 outs.append(self.fpn_convs[used_backbone_levels](orig))
                 # P7
                 for i in range(used_backbone_levels + 1, self.num_outs):
                     # BUG: we should add relu before each extra conv
+                    # self.fpn_convs[4](outs[-1]) =>  conv(256, 256, k=3, s=2, p=1)(P6)
                     outs.append(self.fpn_convs[i](outs[-1]))
         # (P3(75x75), P4(38x38), P5(19x19), P6(10x10), P7(5x5))
         return tuple(outs)
