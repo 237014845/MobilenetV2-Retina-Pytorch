@@ -10,8 +10,17 @@ from mmdet.core import (AnchorGenerator, anchor_target, delta2bbox,
                         weighted_binary_cross_entropy,
                         weighted_sigmoid_focal_loss, multiclass_nms)
 from ..registry import HEADS
-
-
+# Retina:
+    #     num_classes=2,
+    #     in_channels=256,
+    #     stacked_convs=4,
+    #     feat_channels=256,
+    #     octave_base_scale=4,
+    #     scales_per_octave=3,
+    #     anchor_ratios=[0.5, 1.0, 2.0],
+    #     anchor_strides=[8, 16, 32, 64, 128],
+    #     target_means=[.0, .0, .0, .0],
+    #     target_stds=[1.0, 1.0, 1.0, 1.0]
 @HEADS.register_module
 class AnchorHead(nn.Module):
     """Anchor-based head (RPN, RetinaNet, SSD, etc.).
@@ -57,6 +66,9 @@ class AnchorHead(nn.Module):
         self.use_focal_loss = use_focal_loss
 
         self.anchor_generators = []
+        # retina : self.anchor_base_sizes = [8, 16, 32, 64, 128]
+        #          anchor_scales=[4, 4*2^(1/3), 4*2^(2/3)]
+        #          anchor_ratios=[0.5, 1.0, 2.0]
         for anchor_base in self.anchor_base_sizes:
             self.anchor_generators.append(
                 AnchorGenerator(anchor_base, anchor_scales, anchor_ratios))

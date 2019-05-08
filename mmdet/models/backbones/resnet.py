@@ -512,5 +512,5 @@ class ResNet(nn.Module):
 # from torchsummary import summary
 # device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 # model = ResNet(depth=50).to(device)
-# a = summary(model, (3, 600, 600))
+# a = summary(model, (3, 640, 640))
 # print(a)

@@ -5,11 +5,11 @@ model = dict(
     backbone=dict(
         type='ShuffleNetV2',
         out_indices=(3, 11, 15),
-        width_mult=0.5,
+        width_mult=1.0,
         ),
     neck=dict(
         type='FPN',
-        in_channels=[24, 48, 96, 192],
+        in_channels=[24, 116, 232, 464],
         out_channels=256,
         start_level=1,
         add_extra_convs=True,

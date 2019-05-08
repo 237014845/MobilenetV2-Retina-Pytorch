@@ -3,7 +3,9 @@ import torch.nn.functional as F
 import numpy as np
 import math
 
-
+# base_size = 8, 16, 32, 64, 128
+# anchor_scales=[4, 4*2^(1/3), 4*2^(2/3)]
+# anchor_ratios=[0.5, 1.0, 2.0]
 class AnchorGenerator(object):
     def __init__(self, base_size, scales, ratios, scale_major=True, ctr=None):
         self.base_size = base_size
@@ -100,7 +102,13 @@ w_ratios = 1 / h_ratios
 for anchor_base in anchor_base_sizes:
     anchor_generators.append(
         AnchorGenerator(anchor_base, scales, ratios))
-print(anchor_generators[1].grid_anchors((5, 5), stride=128, device='cpu').shape)
+print(anchor_generators[0].gen_base_anchors(),
+      anchor_generators[1].gen_base_anchors(),
+      anchor_generators[2].gen_base_anchors(),
+      anchor_generators[3].gen_base_anchors(),
+      anchor_generators[4].gen_base_anchors(),
+      )
+# print(anchor_generators[1].grid_anchor.s((5, 5), stride=128, device='cpu').shape)
 
 
 def meshgrid( x, y, row_major=True):
@@ -129,7 +137,7 @@ shift_y = torch.arange(0, feat_h) * stride
 shift_xx, shift_yy = meshgrid(shift_x, shift_y)
 shifts = torch.stack([shift_xx, shift_yy, shift_xx, shift_yy], dim=-1)
 shifts = shifts.type_as(base_anchors)
-print(shifts, shifts.shape)
+# print(shifts, shifts.shape)
 # first feat_w elements correspond to the first row of shifts
 # add A anchors (1, A, 4) to K shifts (K, 1, 4) to get
 # shifted anchors (K, A, 4), reshape to (K*A, 4)

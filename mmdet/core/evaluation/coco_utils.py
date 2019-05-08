@@ -30,6 +30,8 @@ def coco_eval(result_file, result_types, coco, max_dets=(100, 300, 1000)):
         iou_type = 'bbox' if res_type == 'proposal' else res_type
         cocoEval = COCOeval(coco, coco_dets, iou_type)
         cocoEval.params.imgIds = img_ids
+        # 无类别时候使用
+        cocoEval.params.useCats = 0
         if res_type == 'proposal':
             cocoEval.params.useCats = 0
             cocoEval.params.maxDets = list(max_dets)

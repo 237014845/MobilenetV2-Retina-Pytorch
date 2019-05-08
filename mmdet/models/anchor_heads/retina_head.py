@@ -49,7 +49,7 @@ class RetinaHead(AnchorHead):
         # 俩组并行的 subnet ： 由4个 conv(256, 256, 3, s=1, p=1) 组成
         # fro i in range(4)
         for i in range(self.stacked_convs):
-            # 256
+            # self.in_channels = self.feat_channels = 256
             chn = self.in_channels if i == 0 else self.feat_channels
             self.cls_convs.append(
                 nn.Conv2d(chn, self.feat_channels, 3, stride=1, padding=1))
